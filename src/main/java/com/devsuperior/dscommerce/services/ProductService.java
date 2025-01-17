@@ -1,5 +1,6 @@
 package com.devsuperior.dscommerce.services;
 
+import com.devsuperior.dscommerce.DTO.ProductMinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,11 +29,11 @@ public class ProductService {
 		Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
 			return new ProductDTO(product);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAll(String name, Pageable pageable) {
+	public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
 		Page<Product> result = repository.searchByName(name, pageable);
-		return result.map(x -> new ProductDTO(x));
+		return result.map(x -> new ProductMinDTO(x));
 	}
 	
 	@Transactional
